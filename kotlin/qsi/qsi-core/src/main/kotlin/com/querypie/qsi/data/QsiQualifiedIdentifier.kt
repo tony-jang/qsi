@@ -1,11 +1,13 @@
 package com.querypie.qsi.data
 
-class QsiQualifiedIdentifier(private val identifiers: Array<QsiIdentifier>) : Iterable<QsiIdentifier> {
+class QsiQualifiedIdentifier(vararg numbers: QsiIdentifier) : Iterable<QsiIdentifier> {
+    val identifiers: Array<out QsiIdentifier> = numbers
+
     operator fun get(index: Int): QsiIdentifier {
         return identifiers[index]
     }
 
-    operator fun get(index: IntRange): Array<QsiIdentifier> {
+    operator fun get(index: IntRange): Array<out QsiIdentifier> {
         return identifiers.sliceArray(index)
     }
 

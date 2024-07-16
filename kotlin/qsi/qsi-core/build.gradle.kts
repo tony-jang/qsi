@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    antlr
     kotlin("jvm")
 }
 
@@ -11,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    antlr("org.antlr:antlr4:4.7.1")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }

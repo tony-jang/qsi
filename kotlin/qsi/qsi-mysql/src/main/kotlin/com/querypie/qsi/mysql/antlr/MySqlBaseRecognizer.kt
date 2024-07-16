@@ -13,6 +13,8 @@ abstract class MySqlBaseRecognizer(input: TokenStream?) : Parser(input) {
         protected const val NoBackslashEscapes: Int = 1.shl(4)
     }
 
+    var serverVersion: Int = 0
+
     @JvmField
     protected var MariaDB: Boolean = false
 

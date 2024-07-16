@@ -1,5 +1,6 @@
 package com.querypie.qsi.mysql.antlr
 
+import com.querypie.qsi.mysql.antlr.MySqlLexerInternal
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Token
@@ -101,16 +102,32 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
 
             val (cmp, smaller, bigger) = when {
                 negative -> when {
-                    length == long_len -> Triple(signed_long_str.substring(1), MySqlLexerInternal.INT_NUMBER, MySqlLexerInternal.LONG_NUMBER)
+                    length == long_len -> Triple(
+                        signed_long_str.substring(1),
+                        MySqlLexerInternal.INT_NUMBER,
+                        MySqlLexerInternal.LONG_NUMBER
+                    )
                     length < signed_longlong_len -> return MySqlLexerInternal.LONG_NUMBER
                     length > signed_longlong_len -> return MySqlLexerInternal.DECIMAL_NUMBER
-                    else -> Triple(signed_longlong_str.substring(1), MySqlLexerInternal.LONG_NUMBER, MySqlLexerInternal.DECIMAL_NUMBER)
+                    else -> Triple(
+                        signed_longlong_str.substring(1),
+                        MySqlLexerInternal.LONG_NUMBER,
+                        MySqlLexerInternal.DECIMAL_NUMBER
+                    )
                 }
                 else -> when {
-                    length == long_len -> Triple(long_str, MySqlLexerInternal.INT_NUMBER, MySqlLexerInternal.LONG_NUMBER)
+                    length == long_len -> Triple(
+                        long_str,
+                        MySqlLexerInternal.INT_NUMBER,
+                        MySqlLexerInternal.LONG_NUMBER
+                    )
                     length < longlong_len -> return MySqlLexerInternal.LONG_NUMBER
                     length > longlong_len && length > unsigned_longlong_len -> return MySqlLexerInternal.DECIMAL_NUMBER
-                    length > longlong_len -> Triple(unsigned_longlong_str, MySqlLexerInternal.ULONGLONG_NUMBER, MySqlLexerInternal.DECIMAL_NUMBER)
+                    length > longlong_len -> Triple(
+                        unsigned_longlong_str,
+                        MySqlLexerInternal.ULONGLONG_NUMBER,
+                        MySqlLexerInternal.DECIMAL_NUMBER
+                    )
                     else -> Triple(longlong_str, MySqlLexerInternal.LONG_NUMBER, MySqlLexerInternal.ULONGLONG_NUMBER)
                 }
             }
@@ -150,7 +167,7 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
     @JvmField
     protected var inVersionComment: Boolean = false
     @JvmField
-    protected var MariaDB: Boolean = false
+    var MariaDB: Boolean = false
     private val pendingTokens = ArrayDeque<Token>()
 
     fun isSqlModeActive(mode: Int): Boolean {
