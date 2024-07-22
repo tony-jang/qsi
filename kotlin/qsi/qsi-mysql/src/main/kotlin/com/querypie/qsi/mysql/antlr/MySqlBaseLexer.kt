@@ -1,6 +1,5 @@
 package com.querypie.qsi.mysql.antlr
 
-import com.querypie.qsi.mysql.antlr.MySqlLexerInternal
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.Lexer
 import org.antlr.v4.runtime.Token
@@ -85,6 +84,7 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
                     index++
                     length--
                 }
+
                 '-' -> {
                     index++
                     length--
@@ -107,6 +107,7 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
                         MySqlLexerInternal.INT_NUMBER,
                         MySqlLexerInternal.LONG_NUMBER
                     )
+
                     length < signed_longlong_len -> return MySqlLexerInternal.LONG_NUMBER
                     length > signed_longlong_len -> return MySqlLexerInternal.DECIMAL_NUMBER
                     else -> Triple(
@@ -115,12 +116,14 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
                         MySqlLexerInternal.DECIMAL_NUMBER
                     )
                 }
+
                 else -> when {
                     length == long_len -> Triple(
                         long_str,
                         MySqlLexerInternal.INT_NUMBER,
                         MySqlLexerInternal.LONG_NUMBER
                     )
+
                     length < longlong_len -> return MySqlLexerInternal.LONG_NUMBER
                     length > longlong_len && length > unsigned_longlong_len -> return MySqlLexerInternal.DECIMAL_NUMBER
                     length > longlong_len -> Triple(
@@ -128,6 +131,7 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
                         MySqlLexerInternal.ULONGLONG_NUMBER,
                         MySqlLexerInternal.DECIMAL_NUMBER
                     )
+
                     else -> Triple(longlong_str, MySqlLexerInternal.LONG_NUMBER, MySqlLexerInternal.ULONGLONG_NUMBER)
                 }
             }
@@ -164,8 +168,10 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
 
 
     val charsets: HashSet<String> = characterSets.toHashSet()
+
     @JvmField
     protected var inVersionComment: Boolean = false
+
     @JvmField
     var MariaDB: Boolean = false
     private val pendingTokens = ArrayDeque<Token>()
@@ -180,7 +186,7 @@ abstract class MySqlBaseLexer(input: CharStream?) : Lexer(input) {
 
         val next = super.nextToken()
 
-        if (pendingTokens.isNotEmpty()){
+        if (pendingTokens.isNotEmpty()) {
             pendingTokens.addLast(next)
             return pendingTokens.removeFirst()
         }

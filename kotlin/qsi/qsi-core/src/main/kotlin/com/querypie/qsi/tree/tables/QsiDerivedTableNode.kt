@@ -11,5 +11,9 @@ class QsiDerivedTableNode : QsiTableNode() {
     // TODO: where, grouping, order, limit
 
     override val children: List<QsiNode>
-        get() = listOfNotNull(columns, source, alias)
+        get() = columns.columns + listOfNotNull(source, alias)
+
+    override fun toString(): String {
+        return "Table (Derived) :: column_count: ${columns.columns.size}, source_empty: ${source == null}"
+    }
 }

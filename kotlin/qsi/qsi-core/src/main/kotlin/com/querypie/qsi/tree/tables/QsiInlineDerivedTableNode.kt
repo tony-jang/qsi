@@ -6,7 +6,7 @@ import com.querypie.qsi.tree.expressions.QsiRowValueExpressionNode
 
 class QsiInlineDerivedTableNode : QsiTableNode() {
     var alias: QsiAliasNode? = null
-    var columns: QsiColumnsDeclarationNode? = null;
+    var columns: QsiColumnsDeclarationNode? = null
     val rows = mutableListOf<QsiRowValueExpressionNode>()
 
     override val children: List<QsiNode>

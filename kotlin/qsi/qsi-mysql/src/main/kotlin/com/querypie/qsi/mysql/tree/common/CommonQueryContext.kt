@@ -1,16 +1,9 @@
 package com.querypie.qsi.mysql.tree.common
 
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.LimitClauseContext
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.LockingClauseListContext
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.OrderClauseContext
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.ProcedureAnalyseClauseContext
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.QueryExpressionBodyContext
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.QueryExpressionParensContext
-import com.querypie.qsi.mysql.antlr.MySqlParserInternal.WithClauseContext
+import com.querypie.qsi.mysql.antlr.MySqlParserInternal.*
 
 class CommonQueryContext(
-    queryExpression: MySqlParserInternal.QueryExpressionContext,
+    queryExpression: QueryExpressionContext,
     val lockingClauseList: LockingClauseListContext?
 ) {
     val withClause: WithClauseContext? = queryExpression.withClause()
